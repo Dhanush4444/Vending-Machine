@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "148592097999",
+    "firebase_url": "https://my-vending-machine.firebaseio.com",
+    "project_id": "my-vending-machine",
+    "storage_bucket": "my-vending-machine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:148592097999:android:71bedf3bba495f94",
+        "android_client_info": {
+          "package_name": "com.example.joker.vendingmachine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "148592097999-m8d61jsl29chfsi1e6ba8opipu69aj07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg-XPKe2sBg7RkP0U8Fu-mX0VZTT8a9MQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
