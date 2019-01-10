@@ -1,34 +1,49 @@
 package com.example.joker.vendingmachine;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Main2Activity extends AppCompatActivity {
-
+    DatabaseReference mDatabase;
+    FirebaseAuth mAuth;
+    TextView wallet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
+        wallet=(TextView) findViewById(R.id.wallet);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mAuth=FirebaseAuth.getInstance();
         final ListView listview = (ListView) findViewById(R.id.listview);
         String[] values = new String[] { "Dhanush","Fuck SIT", "Dick head RSS", "HOD shit head" };
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    wallet.setText("Wallet Balance : "+dataSnapshot.child("wallet").getValue().toString().trim());
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         final ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < values.length; ++i) {
             list.add(values[i]);
         }
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,list));
+        listview.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -36,15 +51,17 @@ public class Main2Activity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, final View view,
                                     int position, long id) {
                 final String item = (String) parent.getItemAtPosition(position);
-                view.animate().setDuration(2000).alpha(0)
-                        .withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
-                                list.remove(item);
-                                adapter.notifyDataSetChanged();
-                                view.setAlpha(1);
-                            }
-                        });
+//                view.animate().setDuration(2000).alpha(0)
+//                        .withEndAction(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                list.remove(item);
+////                                listview.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list));
+//                                adapter.notifyDataSetChanged();
+//                                view.setAlpha(1);
+//                            }
+//                        });
+                Toast.makeText(Main2Activity.this, "you clicked : "+item, Toast.LENGTH_SHORT).show();
             }
 
         });

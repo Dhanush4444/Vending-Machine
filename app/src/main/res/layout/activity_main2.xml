@@ -6,13 +6,18 @@
                 android:padding="6dip" >
 
 
-
+<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical">
+    <TextView android:layout_width="match_parent"
+              android:id="@+id/wallet"
+              android:text="Wallet Balance : 0"
+              android:layout_height="wrap_content"/>
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_marginTop="10dp"
               android:id="@+id/listview"
               android:layout_width="match_parent"
               android:layout_height="match_parent" />
 
-
+</LinearLayout>
 
 </RelativeLayout>
 
