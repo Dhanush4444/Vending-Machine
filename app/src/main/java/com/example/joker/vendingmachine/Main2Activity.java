@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.*;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.*;
-
+import java.lang.Long;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,19 +17,31 @@ public class Main2Activity extends AppCompatActivity {
     DatabaseReference mDatabase;
     FirebaseAuth mAuth;
     TextView wallet;
+    Long walletDatal;
+    int walletData;
+    ArrayList<Integer> prices;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        wallet=(TextView) findViewById(R.id.wallet);
+        wallet = (TextView) findViewById(R.id.wallet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         final ListView listview = (ListView) findViewById(R.id.listview);
-        String[] values = new String[] { "Dhanush","Fuck SIT", "Dick head RSS", "HOD shit head" };
+        prices=new ArrayList<Integer>(){
+            {
+                add(10);
+                add(10);
+                add(200);
+                add(500);
+            }
+        };
+        String[] values = new String[]{"Coke - 10rs", "Fanta - 10rs", "Vodka-200rs", "100pipers - 500rs"};
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    wallet.setText("Wallet Balance : "+dataSnapshot.child("wallet").getValue().toString().trim());
+                wallet.setText("Wallet Balance : " + dataSnapshot.child("wallet").getValue().toString().trim());
+                walletDatal=(Long) dataSnapshot.child("wallet").getValue();
             }
 
             @Override
@@ -43,36 +55,40 @@ public class Main2Activity extends AppCompatActivity {
         }
         final StableArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, list);
-        listview.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list));
+        listview.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final String item = (String) parent.getItemAtPosition(position);
-//                view.animate().setDuration(2000).alpha(0)
-//                        .withEndAction(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                list.remove(item);
-////                                listview.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list));
-//                                adapter.notifyDataSetChanged();
-//                                view.setAlpha(1);
-//                            }
-//                        });
-                Toast.makeText(Main2Activity.this, "you clicked : "+item, Toast.LENGTH_SHORT).show();
+                                    final int position, long id) {
+//                final String item = (String) parent.getItemAtPosition(position);
+
+                walletData=walletDatal.intValue();
+                walletData-=prices.get(position);
+                mDatabase.child("wallet").setValue(walletData);
+
+
+
+
+
+
+
+
+                Toast.makeText(Main2Activity.this, "Clciked : "+Integer.toString(position), Toast.LENGTH_SHORT).show();
+
             }
 
         });
-}
+
+    }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
 
         HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
 
-        public StableArrayAdapter(Context context, int textViewResourceId,
-                                  List<String> objects) {
+        StableArrayAdapter(Context context, int textViewResourceId,
+                           List<String> objects) {
             super(context, textViewResourceId, objects);
             for (int i = 0; i < objects.size(); ++i) {
                 mIdMap.put(objects.get(i), i);
@@ -91,6 +107,8 @@ public class Main2Activity extends AppCompatActivity {
         }
 
     }
+
+
 
 }
 
