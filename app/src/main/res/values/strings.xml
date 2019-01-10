@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">VendingMachine</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="img">Img</string>
+    <string name="emailpng">EmailPng</string>
+    <string name="password">Password</string>
+    <string name="passpng">PassPng</string>
+    <string name="vending_machine">Vending Machine</string>
 </resources>

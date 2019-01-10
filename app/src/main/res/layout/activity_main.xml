@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background">
 
@@ -11,7 +11,7 @@
             android:src="@drawable/vending"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
-            android:id="@+id/imgvw" />
+            android:id="@+id/imgvw" android:contentDescription="@string/img"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -23,15 +23,15 @@
     >
         <Button
                 android:id="@+id/button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="@string/login"
                 android:textColor="#fff"
                 android:background="@drawable/border"
                 android:padding="15dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textStyle="bold"
         />
     </LinearLayout>
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-        >
+                tools:ignore="UselessParent">
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -57,20 +57,20 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/user"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center" android:contentDescription="@string/emailpng"/>
                 <EditText
                         android:id="@+id/emailId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
+                        android:hint="@string/email"
                         android:textColorHint="#fff"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:background="#00000000"
                         android:letterSpacing="0.1"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         android:textColor="#fff"
                         android:inputType="text"
-                />
+                        tools:ignore="TextFields"/>
             </LinearLayout>
             <LinearLayout
                     android:layout_width="match_parent"
@@ -85,18 +85,18 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/password"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center" android:contentDescription="@string/passpng"/>
                 <EditText
                         android:id="@+id/passId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Password"
+                        android:hint="@string/password"
                         android:textColorHint="#fff"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
                         android:background="#00000000"
                         android:inputType="textPassword"
                         android:letterSpacing="0.1"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         android:textColor="#fff"
                 />
             </LinearLayout>
@@ -111,14 +111,14 @@
             android:id="@+id/bytes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Vending Machine"
+            android:text="@string/vending_machine"
             android:textColor="#fff"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:gravity="top|center"
             android:textStyle="bold"
             android:layout_alignBottom="@+id/lnrlyout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="39dp"
-            android:layout_below="@+id/imgvw" />
+            android:layout_below="@+id/imgvw" tools:ignore="RtlHardcoded"/>
 </RelativeLayout>
