@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,26 +31,29 @@ public class MainActivity extends AppCompatActivity {
         loginBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth.signInWithEmailAndPassword(emailText.getText().toString().trim(),passText.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                if (TextUtils.isEmpty(emailText.getText().toString().trim()) || TextUtils.isEmpty(passText.getText().toString().trim())) {
+                    Toast.makeText(MainActivity.this, "Fileds Empty", Toast.LENGTH_SHORT).show();
+                }
+else{
+                mAuth.signInWithEmailAndPassword(emailText.getText().toString().trim(), passText.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),Main2Activity.class));
-                        }
-                        else{
-                            try{
+                            startActivity(new Intent(getApplicationContext(), Main2Activity.class));
+                        } else {
+                            try {
                                 throw Objects.requireNonNull(task.getException());
-                            }
-                            catch (FirebaseAuthInvalidUserException | FirebaseAuthInvalidCredentialsException usr){
+                            } catch (FirebaseAuthInvalidUserException | FirebaseAuthInvalidCredentialsException usr) {
                                 Toast.makeText(MainActivity.this, "incorrect email or password", Toast.LENGTH_SHORT).show();
-                            } catch (Exception e){
-                                Toast.makeText(MainActivity.this, "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                Toast.makeText(MainActivity.this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                     }
                 });
+            }
             }
         });
     }
