@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     Button loginBut;
     EditText emailText,passText;
-
+    FirebaseUser userDa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +28,17 @@ public class MainActivity extends AppCompatActivity {
         emailText=(EditText) findViewById(R.id.emailId);
         passText=(EditText) findViewById(R.id.passId);
         loginBut=(Button) findViewById(R.id.button);
+        userDa=mAuth.getCurrentUser();
+
+        if(userDa != null){
+            startActivity(new Intent(getApplicationContext(),Main2Activity.class));
+        }
+
         loginBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 if (TextUtils.isEmpty(emailText.getText().toString().trim()) || TextUtils.isEmpty(passText.getText().toString().trim())) {
                     Toast.makeText(MainActivity.this, "Fileds Empty", Toast.LENGTH_SHORT).show();
                 }
@@ -54,6 +62,10 @@ else{
                     }
                 });
             }
+
+
+
+
             }
         });
     }

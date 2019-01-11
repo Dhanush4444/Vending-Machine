@@ -19,6 +19,7 @@ public class Main2Activity extends AppCompatActivity {
     TextView wallet;
     Long walletDatal;
     int walletData;
+    Button logut;
     ArrayList<Integer> prices;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class Main2Activity extends AppCompatActivity {
         wallet = (TextView) findViewById(R.id.wallet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        logut=(Button) findViewById(R.id.logoutButton);
         final ListView listview = (ListView) findViewById(R.id.listview);
         prices=new ArrayList<Integer>(){
             {
@@ -36,6 +38,13 @@ public class Main2Activity extends AppCompatActivity {
                 add(500);
             }
         };
+
+        logut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+            }
+        });
         String[] values = new String[]{"Coke - 10rs", "Fanta - 10rs", "Vodka-200rs", "100pipers - 500rs"};
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
