@@ -1,6 +1,7 @@
 package com.example.joker.vendingmachine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
         String[] values = new String[]{"Coke - 10rs", "Fanta - 10rs", "Vodka-200rs", "100pipers - 500rs"};
@@ -74,7 +76,10 @@ public class Main2Activity extends AppCompatActivity {
 //                final String item = (String) parent.getItemAtPosition(position);
 
                 walletData=walletDatal.intValue();
+                if(walletData>=prices.get(position))
                 walletData-=prices.get(position);
+                else
+                    Toast.makeText(Main2Activity.this, "Insufficient wallet balance", Toast.LENGTH_SHORT).show();
                 mDatabase.child("wallet").setValue(walletData);
 
 
@@ -84,7 +89,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-                Toast.makeText(Main2Activity.this, "Clciked : "+Integer.toString(position), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Main2Activity.this, "Clciked : "+Integer.toString(position), Toast.LENGTH_SHORT).show();
 
             }
 
