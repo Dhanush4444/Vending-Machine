@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 import java.lang.Long;
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ import java.util.List;
 public class Main2Activity extends AppCompatActivity {
     DatabaseReference mDatabase;
     FirebaseAuth mAuth;
-    TextView wallet;
+    TextView wallet,usrname;
+    FirebaseUser mUser;
     Long walletDatal;
     int walletData;
     Button logut;
@@ -29,14 +31,18 @@ public class Main2Activity extends AppCompatActivity {
         wallet = (TextView) findViewById(R.id.wallet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        mUser=mAuth.getCurrentUser();
         logut=(Button) findViewById(R.id.logoutButton);
+        usrname=(TextView) findViewById(R.id.usrname);
         final ListView listview = (ListView) findViewById(R.id.listview);
         prices=new ArrayList<Integer>(){
             {
+                add(20);
+                add(20);
                 add(10);
-                add(10);
-                add(200);
-                add(500);
+                add(30);
+                add(30);
+
             }
         };
 
@@ -47,12 +53,13 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }
         });
-        String[] values = new String[]{"Coke - 10rs", "Fanta - 10rs", "Vodka-200rs", "100pipers - 500rs"};
+        String[] values = new String[]{"Dairy Milk : 20rs","Kitkat: 20rs","Lays : 10rs","Coke : 30rs","7Up : 30rs"};
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                wallet.setText("Wallet Balance : " + dataSnapshot.child("wallet").getValue().toString().trim());
-                walletDatal=(Long) dataSnapshot.child("wallet").getValue();
+                wallet.setText("Wallet Balance : " + dataSnapshot.child(mUser.getUid()).child("wallet").getValue().toString().trim());
+                walletDatal=(Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
+                usrname.setText("Username : "+dataSnapshot.child(mUser.getUid()).child("Name").getValue().toString());
             }
 
             @Override
@@ -73,14 +80,14 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
                                     final int position, long id) {
-//                final String item = (String) parent.getItemAtPosition(position);
+                final String item = (String) parent.getItemAtPosition(position);
 
                 walletData=walletDatal.intValue();
                 if(walletData>=prices.get(position))
                 walletData-=prices.get(position);
                 else
                     Toast.makeText(Main2Activity.this, "Insufficient wallet balance", Toast.LENGTH_SHORT).show();
-                mDatabase.child("wallet").setValue(walletData);
+                mDatabase.child(mUser.getUid()).child("wallet").setValue(walletData);
 
 
 
@@ -89,7 +96,7 @@ public class Main2Activity extends AppCompatActivity {
 
 
 
-//                Toast.makeText(Main2Activity.this, "Clciked : "+Integer.toString(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(Main2Activity.this, "Purchased "+item, Toast.LENGTH_SHORT).show();
 
             }
 
