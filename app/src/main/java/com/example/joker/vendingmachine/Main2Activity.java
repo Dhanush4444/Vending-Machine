@@ -16,30 +16,27 @@ import java.util.Arrays;
 
 public class Main2Activity extends AppCompatActivity {
 
-    DatabaseReference mDatabase;
-    FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private FirebaseAuth mAuth;
     TextView wallet, usrname;
-    FirebaseUser mUser;
-    Long walletDatal;
-    ArrayList<String> list;
-    int walletData;
+    private FirebaseUser mUser;
+    private Long walletDatal;
+    private int walletData;
 
-    Button logut;
-    ArrayList<Integer> prices,itemCount;
+    private ArrayList<Integer> prices,itemCount;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        list = new ArrayList<String>();
-        wallet = (TextView) findViewById(R.id.wallet);
+        ArrayList<String> list = new ArrayList<>();
+        wallet = findViewById(R.id.wallet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-//        values=new ArrayList<String>();
-        logut = (Button) findViewById(R.id.logoutButton);
-        usrname = (TextView) findViewById(R.id.usrname);
-        final ListView listview = (ListView) findViewById(R.id.listview);
+        Button logut = findViewById(R.id.logoutButton);
+        usrname = findViewById(R.id.usrname);
+        final ListView listview = findViewById(R.id.listview);
         prices = new ArrayList<Integer>() {
             {
                 add(20);
