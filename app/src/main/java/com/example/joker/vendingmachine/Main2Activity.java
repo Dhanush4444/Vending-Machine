@@ -6,30 +6,33 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.*;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 
 public class Main2Activity extends AppCompatActivity {
-
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     TextView wallet, usrname;
+    String json="";
     private FirebaseUser mUser;
     private Long walletDatal;
+    JSONObject ob1;
     private int walletData;
-
-    private ArrayList<Integer> prices,itemCount;
-
+    private ArrayList<Integer> prices, itemCount;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        ArrayList<String> list = new ArrayList<>();
+        final ArrayList<String> list = new ArrayList<>();
         wallet = findViewById(R.id.wallet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -47,14 +50,16 @@ public class Main2Activity extends AppCompatActivity {
 
             }
         };
+        
+
 
         logut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth.signOut();
-                mUser=null;
+                mUser = null;
                 Intent i = getBaseContext().getPackageManager()
-                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
@@ -68,6 +73,26 @@ public class Main2Activity extends AppCompatActivity {
                 wallet.setText(String.format("Wallet Balance : %s", dataSnapshot.child(mUser.getUid()).child("wallet").getValue().toString().trim()));
                 walletDatal = (Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
                 usrname.setText(String.format("Username : %s", dataSnapshot.child(mUser.getUid()).child("Name").getValue().toString()));
+                json=dataSnapshot.child("itemsJSON").getValue().toString();
+                json=json.replace(':','=');
+//                Toast.makeText(Main2Activity.this, json, Toast.LENGTH_SHORT).show();
+                try {
+                    ob1=new JSONObject("{"+json+"}");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Main2Activity.this, e.getMessage() + json, Toast.LENGTH_SHORT).show();
+                }
+                try {
+                    list.clear();
+                    for(int i=1;i<=ob1.getInt("itemCount");i++){
+                        list.add(ob1.getJSONObject(""+i).getString("name"));
+//                        Toast.makeText(Main2Activity.this, ob1.getJSONObject(""+i).getString("name"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, android.R.layout.simple_list_item_1, list));
 
             }
 
@@ -78,10 +103,10 @@ public class Main2Activity extends AppCompatActivity {
         });
 
 
-        list.addAll(Arrays.asList(values));
+//        list.addAll(Arrays.asList(values));
 
 
-        listview.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list));
+
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -105,7 +130,6 @@ public class Main2Activity extends AppCompatActivity {
         });
 
     }
-
 
 
 }

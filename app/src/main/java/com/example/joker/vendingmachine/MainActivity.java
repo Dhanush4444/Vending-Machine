@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         userDa=mAuth.getCurrentUser();
 
         if(userDa != null){
+
             startActivity(new Intent(getApplicationContext(),Main2Activity.class));
         }
 
