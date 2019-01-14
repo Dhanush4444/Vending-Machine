@@ -41,7 +41,15 @@ public class Main2Activity extends AppCompatActivity {
         Button logut = findViewById(R.id.logoutButton);
         usrname = findViewById(R.id.usrname);
         final ListView listview = findViewById(R.id.listview);
-        prices=new ArrayList<>();
+        prices=new ArrayList<Integer>(){
+            {
+                add(20);
+                add(10);
+                add(30);
+                add(10);
+                add(30);
+            }
+        };
         logut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +62,7 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-
+String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays : 10rs","Dairy Milk : 30rs"};
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -62,34 +70,38 @@ public class Main2Activity extends AppCompatActivity {
                 walletDatal = (Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
                 usrname.setText(String.format("Username : %s", Objects.requireNonNull(dataSnapshot.child(mUser.getUid()).child("Name").getValue()).toString()));
                 json= Objects.requireNonNull(dataSnapshot.child("itemsJSON").getValue()).toString();
-                json=json.replace(':','=');
-                try {
-                    ob1=new JSONObject("{"+json+"}");
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(Main2Activity.this, e.getMessage() + json, Toast.LENGTH_SHORT).show();
-                }
-                try {
-                    if(ob1.length() == 0) {
-                        list.clear();
-                        prices.clear();
-                    }
-                    if(prevCount!= ob1.getInt("itemCount")) {
-                        list.clear();
-                        prices.clear();
-                        for (int i = 1; i <= ob1.getInt("itemCount"); i++) {
-                            list.add(ob1.getJSONObject("" + i).getString("name"));
-                            prices.add(ob1.getJSONObject(""+i).getInt("price"));
-                        }
-                        prevCount=ob1.getInt("itemCount");
-                        listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, R.layout.my_list_view, list));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
 
+
+
+// json=json.replace(':','=');
+//                try {
+//                    ob1=new JSONObject("{"+json+"}");
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(Main2Activity.this, e.getMessage() + json, Toast.LENGTH_SHORT).show();
+//                }
+//                try {
+//                    if(ob1.length() == 0) {
+//                        list.clear();
+//                        prices.clear();
+//                    }
+//                    if(prevCount!= ob1.getInt("itemCount")) {
+//                        list.clear();
+//                        prices.clear();
+//                        for (int i = 1; i <= ob1.getInt("itemCount"); i++) {
+//                            list.add(ob1.getJSONObject("" + i).getString("name"));
+//                            prices.add(ob1.getJSONObject(""+i).getInt("price"));
+//                        }
+//                        prevCount=ob1.getInt("itemCount");
+//                        listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, R.layout.my_list_view, list));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                    Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//
 
 
             }
@@ -99,6 +111,8 @@ public class Main2Activity extends AppCompatActivity {
 
             }
         });
+
+        listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, R.layout.my_list_view, list));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -112,7 +126,6 @@ public class Main2Activity extends AppCompatActivity {
                     walletData -= prices.get(position);
                     Toast.makeText(Main2Activity.this, "Purchased " + item, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(),Main3Activity.class)
-                            .putExtra("prices",prices).putExtra("names",list)
                             .putExtra("position",position));
                 }
                 else
