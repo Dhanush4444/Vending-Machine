@@ -12,12 +12,6 @@
             android:id="@+id/logoutButton"
     />
     <TextView android:layout_width="match_parent"
-              android:id="@+id/wallet"
-              android:text="Wallet Balance : 0"
-              android:layout_height="50dp"
-              android:textSize="30dp"
-    />
-    <TextView android:layout_width="match_parent"
               android:id="@+id/usrname"
               android:text="Username : "
               android:layout_height="50dp"

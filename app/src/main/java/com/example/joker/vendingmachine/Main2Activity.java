@@ -22,7 +22,7 @@ import java.util.Objects;
 public class Main2Activity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
-    TextView wallet, usrname;
+    TextView usrname;
 //    String json="";
     private int prevCount=0;
     private FirebaseUser mUser;
@@ -36,7 +36,6 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         list = new ArrayList<>();
-        wallet = findViewById(R.id.wallet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -68,7 +67,6 @@ String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays :
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                wallet.setText(String.format("Wallet Balance : %s", Objects.requireNonNull(dataSnapshot.child(mUser.getUid()).child("wallet").getValue()).toString().trim()));
                 walletDatal = (Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
                 usrname.setText(String.format("Username : %s", Objects.requireNonNull(dataSnapshot.child(mUser.getUid()).child("Name").getValue()).toString()));
 //                json= Objects.requireNonNull(dataSnapshot.child("itemsJSON").getValue()).toString();

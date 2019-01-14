@@ -22,7 +22,7 @@ public class Main3Activity extends AppCompatActivity {
     private int Id;
     Button Inc, Dec;
     ImageView image;
-    private TextView quantity, avail;
+    private TextView quantity, avail,balanceView;
     private Long availableLong;
     private FirebaseUser mUser;
     private FirebaseAuth mAuth;
@@ -37,6 +37,7 @@ public class Main3Activity extends AppCompatActivity {
             quantity = findViewById(R.id.quantId);
             Inc = findViewById(R.id.plusId);
             avail = findViewById(R.id.countId);
+            balanceView=findViewById(R.id.balanceId);
             mDatabase = FirebaseDatabase.getInstance().getReference();
             mAuth = FirebaseAuth.getInstance();
             mUser = mAuth.getCurrentUser();
@@ -51,6 +52,7 @@ public class Main3Activity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     availableLong = (Long) dataSnapshot.child("items").child("" + Id).child("count").getValue();
                     avail.setText("Available : " + availableLong.toString());
+                    balanceView.setText("Balance : "+dataSnapshot.child(mUser.getUid()).child("wallet").getValue().toString());
 //                    Toast.makeText(Main3Activity.this, dataSnapshot.child("items").child("1").getValue().toString(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -66,8 +68,10 @@ public class Main3Activity extends AppCompatActivity {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+//                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                            .setAction("Action", null).show();
+
+
                 }
             });
 
