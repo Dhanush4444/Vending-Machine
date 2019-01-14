@@ -133,7 +133,7 @@ String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays :
                     Toast.makeText(Main2Activity.this, "Insufficient wallet balance", Toast.LENGTH_SHORT).show();
 
 
-                mDatabase.child(mUser.getUid()).child("wallet").setValue(walletData);
+
 
 
 
