@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
+import java.util.Objects;
 
 
 public class Main2Activity extends AppCompatActivity {
@@ -41,21 +41,7 @@ public class Main2Activity extends AppCompatActivity {
         Button logut = findViewById(R.id.logoutButton);
         usrname = findViewById(R.id.usrname);
         final ListView listview = findViewById(R.id.listview);
-//        prices = new ArrayList<Integer>() {
-//            {
-//                add(20);
-//                add(20);
-//                add(10);
-//                add(30);
-//                add(30);
-//
-//            }
-//        };
-
         prices=new ArrayList<>();
-
-
-
         logut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,10 +58,10 @@ public class Main2Activity extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                wallet.setText(String.format("Wallet Balance : %s", dataSnapshot.child(mUser.getUid()).child("wallet").getValue().toString().trim()));
+                wallet.setText(String.format("Wallet Balance : %s", Objects.requireNonNull(dataSnapshot.child(mUser.getUid()).child("wallet").getValue()).toString().trim()));
                 walletDatal = (Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
-                usrname.setText(String.format("Username : %s", dataSnapshot.child(mUser.getUid()).child("Name").getValue().toString()));
-                json=dataSnapshot.child("itemsJSON").getValue().toString();
+                usrname.setText(String.format("Username : %s", Objects.requireNonNull(dataSnapshot.child(mUser.getUid()).child("Name").getValue()).toString()));
+                json= Objects.requireNonNull(dataSnapshot.child("itemsJSON").getValue()).toString();
                 json=json.replace(':','=');
                 try {
                     ob1=new JSONObject("{"+json+"}");
@@ -114,12 +100,6 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-
-//        list.addAll(Arrays.asList(values));
-
-
-
-
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -128,14 +108,16 @@ public class Main2Activity extends AppCompatActivity {
                 final String item = (String) parent.getItemAtPosition(position);
 
                 walletData = walletDatal.intValue();
-                if (walletData >= prices.get(position))
+                if (walletData >= prices.get(position)) {
                     walletData -= prices.get(position);
+                    Toast.makeText(Main2Activity.this, "Purchased " + item, Toast.LENGTH_SHORT).show();
+                }
                 else
                     Toast.makeText(Main2Activity.this, "Insufficient wallet balance", Toast.LENGTH_SHORT).show();
                 mDatabase.child(mUser.getUid()).child("wallet").setValue(walletData);
 
 
-                Toast.makeText(Main2Activity.this, "Purchased " + item, Toast.LENGTH_SHORT).show();
+
 
             }
 
@@ -146,40 +128,3 @@ public class Main2Activity extends AppCompatActivity {
 
 }
 
-//                Toast.makeText(getApplicationContext(),ob.length(),Toast.LENGTH_LONG).show();
-//                itemCoun=(Long)dataSnapshot.child("items").child("itemCount").getValue();
-//                itemCount=itemCoun.intValue();
-//                for(int i=0;i<5;i++){
-//                    list.add(dataSnapshot.child("items").child("1").child("name").getValue().toString());
-//                    list.add(dataSnapshot.child("items").child("2").child("name").getValue().toString());
-//                    list.add(dataSnapshot.child("items").child("3").child("name").getValue().toString());
-//                    list.add(dataSnapshot.child("items").child("4").child("name").getValue().toString());
-//                    list.add(dataSnapshot.child("items").child("5").child("name").getValue().toString());
-//                }
-
-
-//    private class StableArrayAdapter extends ArrayAdapter<String> {
-//
-//        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
-//
-//        StableArrayAdapter(Context context, int textViewResourceId,
-//                           List<String> objects) {
-//            super(context, textViewResourceId, objects);
-//            for (int i = 0; i < objects.size(); ++i) {
-//                mIdMap.put(objects.get(i), i);
-//            }
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            String item = getItem(position);
-//            return mIdMap.get(item);
-//        }
-//
-//        @Override
-//        public boolean hasStableIds() {
-//            return true;
-//        }
-//
-//    }
-//
