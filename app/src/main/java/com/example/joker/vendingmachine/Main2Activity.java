@@ -97,7 +97,7 @@ public class Main2Activity extends AppCompatActivity {
                             prices.add(ob1.getJSONObject(""+i).getInt("price"));
                         }
                         prevCount=ob1.getInt("itemCount");
-                        listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, android.R.layout.simple_list_item_1, list));
+                        listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, R.layout.my_list_view, list));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
