@@ -23,11 +23,12 @@ public class Main2Activity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     TextView wallet, usrname;
     String json="";
+    private int prevCount=0;
     private FirebaseUser mUser;
     private Long walletDatal;
     JSONObject ob1;
     private int walletData;
-    private ArrayList<Integer> prices, itemCount;
+    private ArrayList<Integer> prices;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ public class Main2Activity extends AppCompatActivity {
 
             }
         };
-        
+
 
 
         logut.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +65,6 @@ public class Main2Activity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        String[] values = new String[]{"Dairy Milk : 20rs", "Kitkat: 20rs", "Lays : 10rs", "Coke : 30rs", "7Up : 30rs"};
 
 
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -75,24 +75,29 @@ public class Main2Activity extends AppCompatActivity {
                 usrname.setText(String.format("Username : %s", dataSnapshot.child(mUser.getUid()).child("Name").getValue().toString()));
                 json=dataSnapshot.child("itemsJSON").getValue().toString();
                 json=json.replace(':','=');
-//                Toast.makeText(Main2Activity.this, json, Toast.LENGTH_SHORT).show();
                 try {
                     ob1=new JSONObject("{"+json+"}");
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(Main2Activity.this, e.getMessage() + json, Toast.LENGTH_SHORT).show();
                 }
                 try {
-                    list.clear();
-                    for(int i=1;i<=ob1.getInt("itemCount");i++){
-                        list.add(ob1.getJSONObject(""+i).getString("name"));
-//                        Toast.makeText(Main2Activity.this, ob1.getJSONObject(""+i).getString("name"), Toast.LENGTH_SHORT).show();
+
+                    if(prevCount!= ob1.getInt("itemCount")) {
+                        list.clear();
+                        for (int i = 1; i <= ob1.getInt("itemCount"); i++) {
+                            list.add(ob1.getJSONObject("" + i).getString("name"));
+                        }
+                        prevCount=ob1.getInt("itemCount");
+                        listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, android.R.layout.simple_list_item_1, list));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, android.R.layout.simple_list_item_1, list));
+
+
 
             }
 
