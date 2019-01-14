@@ -52,10 +52,10 @@ public class Main3Activity extends AppCompatActivity {
             mDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    availableLong = (Long) dataSnapshot.child("items").child("" + Id).child("count").getValue();
+                    availableLong = (Long) dataSnapshot.child("items").child("" + (Id+1)).child("count").getValue();
                     avail.setText("Available : " + availableLong.toString());
                     balanceView.setText("Balance : "+dataSnapshot.child(mUser.getUid()).child("wallet").getValue().toString());
-                    currentPrizeLong=(Long) dataSnapshot.child("items").child(""+Id).child("price").getValue();
+                    currentPrizeLong=(Long) dataSnapshot.child("items").child(""+ (Id+1)).child("price").getValue();
                     wallet1=(Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
                 }
 
