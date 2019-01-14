@@ -6,13 +6,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
 public class Main3Activity extends AppCompatActivity {
     Bundle extras;
-    ArrayList<Integer> prices;
-    ArrayList<String>  names;
+    private int Id;
+    ImageView image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +21,8 @@ public class Main3Activity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         extras= getIntent().getExtras();
-        prices= extras.getIntegerArrayList("prices");
+        image= findViewById(R.id.imageView);
+        Id=extras.getInt("id");
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setImageResource(R.drawable.buy_icon);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -31,6 +33,21 @@ public class Main3Activity extends AppCompatActivity {
             }
         });
 
+if(Id==0){
+    image.setImageResource(R.drawable.coke_can);
+}
+else if(Id==1){
+    image.setImageResource(R.drawable.kitkat_cho);
+}
+else if(Id==2){
+    image.setImageResource(R.drawable.sp_can);
+}
+else if(Id==3){
+    image.setImageResource(R.drawable.lays_n);
+}
+else if(Id==4){
+    image.setImageResource(R.drawable.dairy_cho);
+}
 
     }
 

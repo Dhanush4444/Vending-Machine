@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 
@@ -26,6 +27,7 @@ public class Main2Activity extends AppCompatActivity {
     private int prevCount=0;
     private FirebaseUser mUser;
     private Long walletDatal;
+     ArrayList<String> list;
     JSONObject ob1;
     private int walletData;
     private ArrayList<Integer> prices;
@@ -33,7 +35,7 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        final ArrayList<String> list = new ArrayList<>();
+        list = new ArrayList<>();
         wallet = findViewById(R.id.wallet);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -111,7 +113,7 @@ String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays :
 
             }
         });
-
+        list.addAll(Arrays.asList(values));
         listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, R.layout.my_list_view, list));
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,11 +127,12 @@ String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays :
                 if (walletData >= prices.get(position)) {
                     walletData -= prices.get(position);
                     Toast.makeText(Main2Activity.this, "Purchased " + item, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(),Main3Activity.class)
-                            .putExtra("position",position));
+                    startActivity(new Intent(getApplicationContext(),Main3Activity.class).putExtra("id",position));
                 }
                 else
                     Toast.makeText(Main2Activity.this, "Insufficient wallet balance", Toast.LENGTH_SHORT).show();
+
+
                 mDatabase.child(mUser.getUid()).child("wallet").setValue(walletData);
 
 
