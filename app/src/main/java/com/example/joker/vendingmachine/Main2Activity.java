@@ -28,7 +28,7 @@ public class Main2Activity extends AppCompatActivity {
     private Long walletDatal;
     JSONObject ob1;
     private int walletData;
-    private ArrayList<Integer> prices;
+    private ArrayList<Integer> prices,names;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +42,7 @@ public class Main2Activity extends AppCompatActivity {
         usrname = findViewById(R.id.usrname);
         final ListView listview = findViewById(R.id.listview);
         prices=new ArrayList<>();
+        names=new ArrayList<>();
         logut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +112,9 @@ public class Main2Activity extends AppCompatActivity {
                 if (walletData >= prices.get(position)) {
                     walletData -= prices.get(position);
                     Toast.makeText(Main2Activity.this, "Purchased " + item, Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(),Main3Activity.class)
+                            .putExtra("prices",prices).putExtra("names",names)
+                            .putExtra("position",position));
                 }
                 else
                     Toast.makeText(Main2Activity.this, "Insufficient wallet balance", Toast.LENGTH_SHORT).show();

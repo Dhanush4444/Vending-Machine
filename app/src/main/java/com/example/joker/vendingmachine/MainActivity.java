@@ -16,18 +16,18 @@ import com.google.firebase.auth.*;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    FirebaseAuth mAuth;
-    Button loginBut;
-    EditText emailText,passText;
-    FirebaseUser userDa;
+    private FirebaseAuth mAuth;
+    private Button loginBut;
+    private EditText emailText,passText;
+    private FirebaseUser userDa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
-        emailText=(EditText) findViewById(R.id.emailId);
-        passText=(EditText) findViewById(R.id.passId);
-        loginBut=(Button) findViewById(R.id.button);
+        emailText= findViewById(R.id.emailId);
+        passText= findViewById(R.id.passId);
+        loginBut= findViewById(R.id.button);
         userDa=mAuth.getCurrentUser();
 
         if(userDa != null){
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 if (TextUtils.isEmpty(emailText.getText().toString().trim()) || TextUtils.isEmpty(passText.getText().toString().trim())) {
-                    Toast.makeText(MainActivity.this, "Fileds Empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Fields Empty", Toast.LENGTH_SHORT).show();
                 }
 else{
                 mAuth.signInWithEmailAndPassword(emailText.getText().toString().trim(), passText.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
