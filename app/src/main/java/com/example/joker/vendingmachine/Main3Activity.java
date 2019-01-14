@@ -19,14 +19,16 @@ import java.util.ArrayList;
 
 public class Main3Activity extends AppCompatActivity {
     Bundle extras;
-    private int Id;
+    private int Id,wallet;
     Button Inc, Dec;
     ImageView image;
+    private int temp;
     private TextView quantity, avail,balanceView;
-    private Long availableLong;
+    private Long availableLong,wallet1;
     private FirebaseUser mUser;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private Long currentPrizeLong;
     private int purchaseCount=0;
         @Override
         protected void onCreate (Bundle savedInstanceState){
@@ -53,7 +55,8 @@ public class Main3Activity extends AppCompatActivity {
                     availableLong = (Long) dataSnapshot.child("items").child("" + Id).child("count").getValue();
                     avail.setText("Available : " + availableLong.toString());
                     balanceView.setText("Balance : "+dataSnapshot.child(mUser.getUid()).child("wallet").getValue().toString());
-//                    Toast.makeText(Main3Activity.this, dataSnapshot.child("items").child("1").getValue().toString(), Toast.LENGTH_SHORT).show();
+                    currentPrizeLong=(Long) dataSnapshot.child("items").child(""+Id).child("price").getValue();
+                    wallet1=(Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
                 }
 
                 @Override
@@ -70,7 +73,18 @@ public class Main3Activity extends AppCompatActivity {
                 public void onClick(View view) {
 //                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                            .setAction("Action", null).show();
+                        temp=purchaseCount;
+                        temp *= currentPrizeLong.intValue();
+                        wallet=wallet1.intValue();
 
+                        if(wallet < temp){
+                            Toast.makeText(Main3Activity.this, "Insufficeint Balance", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            wallet -= temp;
+                            mDatabase.child(mUser.getUid()).child("wallet").setValue(wallet);
+
+                        }
 
                 }
             });

@@ -23,13 +23,8 @@ public class Main2Activity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     TextView usrname;
-//    String json="";
-    private int prevCount=0;
     private FirebaseUser mUser;
-    private Long walletDatal;
      ArrayList<String> list;
-//    JSONObject ob1;
-    private int walletData;
     private ArrayList<Integer> prices;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -67,12 +62,7 @@ String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays :
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                walletDatal = (Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
                 usrname.setText(String.format("Username : %s", Objects.requireNonNull(dataSnapshot.child(mUser.getUid()).child("Name").getValue()).toString()));
-//                json= Objects.requireNonNull(dataSnapshot.child("itemsJSON").getValue()).toString();
-
-
-
 
 // json=json.replace(':','=');
 //                try {
@@ -121,13 +111,8 @@ String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays :
                                     final int position, long id) {
                 final String item = (String) parent.getItemAtPosition(position);
 
-                walletData = walletDatal.intValue();
-                if (walletData >= prices.get(position)) {
-                    walletData -= prices.get(position);
                     startActivity(new Intent(getApplicationContext(),Main3Activity.class).putExtra("id",position));
-                }
-                else
-                    Toast.makeText(Main2Activity.this, "Insufficient wallet balance", Toast.LENGTH_SHORT).show();
+
 
 
             }
