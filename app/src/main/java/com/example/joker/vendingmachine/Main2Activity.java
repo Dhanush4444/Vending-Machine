@@ -41,16 +41,18 @@ public class Main2Activity extends AppCompatActivity {
         Button logut = findViewById(R.id.logoutButton);
         usrname = findViewById(R.id.usrname);
         final ListView listview = findViewById(R.id.listview);
-        prices = new ArrayList<Integer>() {
-            {
-                add(20);
-                add(20);
-                add(10);
-                add(30);
-                add(30);
+//        prices = new ArrayList<Integer>() {
+//            {
+//                add(20);
+//                add(20);
+//                add(10);
+//                add(30);
+//                add(30);
+//
+//            }
+//        };
 
-            }
-        };
+        prices=new ArrayList<>();
 
 
 
@@ -88,6 +90,7 @@ public class Main2Activity extends AppCompatActivity {
                         list.clear();
                         for (int i = 1; i <= ob1.getInt("itemCount"); i++) {
                             list.add(ob1.getJSONObject("" + i).getString("name"));
+                            prices.add(ob1.getJSONObject(""+i).getInt("price"));
                         }
                         prevCount=ob1.getInt("itemCount");
                         listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, android.R.layout.simple_list_item_1, list));
