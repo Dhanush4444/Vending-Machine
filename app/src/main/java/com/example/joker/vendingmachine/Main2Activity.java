@@ -85,9 +85,13 @@ public class Main2Activity extends AppCompatActivity {
                     Toast.makeText(Main2Activity.this, e.getMessage() + json, Toast.LENGTH_SHORT).show();
                 }
                 try {
-
+                    if(ob1.length() == 0) {
+                        list.clear();
+                        prices.clear();
+                    }
                     if(prevCount!= ob1.getInt("itemCount")) {
                         list.clear();
+                        prices.clear();
                         for (int i = 1; i <= ob1.getInt("itemCount"); i++) {
                             list.add(ob1.getJSONObject("" + i).getString("name"));
                             prices.add(ob1.getJSONObject(""+i).getInt("price"));
