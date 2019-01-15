@@ -111,7 +111,7 @@ String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays :
                                     final int position, long id) {
                 final String item = (String) parent.getItemAtPosition(position);
 
-                    startActivity(new Intent(getApplicationContext(),Main3Activity.class).putExtra("id",position));
+                    startActivity(new Intent(getApplicationContext(),Main3Activity.class).putExtra("id",position).putExtra("idString",Integer.toString(position+1)));
 
 
 
