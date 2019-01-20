@@ -3,7 +3,6 @@ package com.example.joker.vendingmachine;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,7 +14,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
-import java.util.ArrayList;
+import java.util.Objects;
+
 
 public class Main3Activity extends AppCompatActivity {
     Bundle extras;
@@ -84,7 +84,7 @@ public class Main3Activity extends AppCompatActivity {
                     if (availableLong.intValue() > 0) {
                         wallet -= temp;
                         String k = ""+Id;
-                        mDatabase.child("items").child(extras.getString("idString")).child("count").setValue(availableLong.intValue() - purchaseCount);
+                        mDatabase.child("items").child(Objects.requireNonNull(extras.getString("idString"))).child("count").setValue(availableLong.intValue() - purchaseCount);
                         mDatabase.child(mUser.getUid()).child("wallet").setValue(wallet);
                     } else
                         Toast.makeText(Main3Activity.this, "Not Available", Toast.LENGTH_SHORT).show();
