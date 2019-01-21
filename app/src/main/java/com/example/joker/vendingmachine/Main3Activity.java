@@ -22,15 +22,17 @@ public class Main3Activity extends AppCompatActivity {
     private int Id, wallet;
     Button Inc, Dec;
     public int rec;
+    public Thread ob;
     public Long recLong;
     ImageView image;
+    public int count = 0;
     private int temp;
     private TextView quantity, avail, balanceView;
     private Long availableLong, wallet1;
     private FirebaseUser mUser;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private Long currentPrizeLong;
+    public Long currentPrizeLong;
     private int purchaseCount = 0;
 
     @Override
@@ -51,7 +53,6 @@ public class Main3Activity extends AppCompatActivity {
         image = findViewById(R.id.imageView);
         Id = extras.getInt("id");
 
-
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -62,6 +63,26 @@ public class Main3Activity extends AppCompatActivity {
                 wallet1 = (Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
                 recLong = (Long) dataSnapshot.child("received").getValue();
                 rec = recLong.intValue();
+                count = 0;
+                if (rec == 1 && count == 0) {
+                    temp = purchaseCount;
+                    count++;
+                    mDatabase.child("received").setValue(0);
+                    temp *= currentPrizeLong.intValue();
+                    wallet = wallet1.intValue();
+
+                    if (wallet < temp) {
+                        Toast.makeText(Main3Activity.this, "Insufficeint Balance", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (availableLong.intValue() > 0) {
+                            wallet -= temp;
+                            String k = "" + Id;
+                            mDatabase.child("items").child(Objects.requireNonNull(extras.getString("idString"))).child("count").setValue(availableLong.intValue() - purchaseCount);
+                            mDatabase.child(mUser.getUid()).child("wallet").setValue(wallet);
+                        } else
+                            Toast.makeText(Main3Activity.this, "Not Available", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
 
             @Override
@@ -78,21 +99,7 @@ public class Main3Activity extends AppCompatActivity {
             public void onClick(View view) {
 //                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                            .setAction("Action", null).show();
-                temp = purchaseCount;
-                temp *= currentPrizeLong.intValue();
-                wallet = wallet1.intValue();
-
-                if (wallet < temp) {
-                    Toast.makeText(Main3Activity.this, "Insufficeint Balance", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (availableLong.intValue() > 0) {
-                        wallet -= temp;
-                        mDatabase.child("items").child(Objects.requireNonNull(extras.getString("idString"))).child("count").setValue(availableLong.intValue() - purchaseCount);
-                        mDatabase.child(mUser.getUid()).child("wallet").setValue(wallet);
-                    } else
-                        Toast.makeText(Main3Activity.this, "Not Available", Toast.LENGTH_SHORT).show();
-                }
-
+                Toast.makeText(getApplicationContext(), "Waiting for transaction to complete", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -135,6 +142,5 @@ public class Main3Activity extends AppCompatActivity {
         });
 
     }
-
 }
 
