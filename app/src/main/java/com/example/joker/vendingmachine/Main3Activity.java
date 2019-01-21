@@ -21,6 +21,8 @@ public class Main3Activity extends AppCompatActivity {
     Bundle extras;
     private int Id, wallet;
     Button Inc, Dec;
+    public int rec;
+    public Long recLong;
     ImageView image;
     private int temp;
     private TextView quantity, avail, balanceView;
@@ -58,6 +60,8 @@ public class Main3Activity extends AppCompatActivity {
                 balanceView.setText("Balance : " + dataSnapshot.child(mUser.getUid()).child("wallet").getValue().toString());
                 currentPrizeLong = (Long) dataSnapshot.child("items").child("" + (Id + 1)).child("price").getValue();
                 wallet1 = (Long) dataSnapshot.child(mUser.getUid()).child("wallet").getValue();
+                recLong = (Long) dataSnapshot.child("received").getValue();
+                rec = recLong.intValue();
             }
 
             @Override
@@ -83,7 +87,6 @@ public class Main3Activity extends AppCompatActivity {
                 } else {
                     if (availableLong.intValue() > 0) {
                         wallet -= temp;
-                        String k = ""+Id;
                         mDatabase.child("items").child(Objects.requireNonNull(extras.getString("idString"))).child("count").setValue(availableLong.intValue() - purchaseCount);
                         mDatabase.child(mUser.getUid()).child("wallet").setValue(wallet);
                     } else
@@ -115,7 +118,7 @@ public class Main3Activity extends AppCompatActivity {
                     quantity.setText("" + purchaseCount);
                 } else {
                     Toast.makeText(Main3Activity.this, "Not available", Toast.LENGTH_SHORT).show();
-                    purchaseCount=0;
+                    purchaseCount = 0;
                     quantity.setText("0");
                 }
             }
