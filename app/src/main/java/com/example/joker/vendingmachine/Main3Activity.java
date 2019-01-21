@@ -1,5 +1,6 @@
 package com.example.joker.vendingmachine;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -76,9 +77,19 @@ public class Main3Activity extends AppCompatActivity {
                     } else {
                         if (availableLong.intValue() > 0) {
                             wallet -= temp;
-                            String k = "" + Id;
+                            Toast.makeText(Main3Activity.this, "Successfull", Toast.LENGTH_LONG).show();
                             mDatabase.child("items").child(Objects.requireNonNull(extras.getString("idString"))).child("count").setValue(availableLong.intValue() - purchaseCount);
                             mDatabase.child(mUser.getUid()).child("wallet").setValue(wallet);
+
+                            try {
+
+                                Thread.sleep(5000);
+
+                            } catch (Exception e) {
+
+                            }
+                            finish();
+                            System.exit(0);
                         } else
                             Toast.makeText(Main3Activity.this, "Not Available", Toast.LENGTH_SHORT).show();
                     }
@@ -99,7 +110,7 @@ public class Main3Activity extends AppCompatActivity {
             public void onClick(View view) {
 //                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                            .setAction("Action", null).show();
-                Toast.makeText(getApplicationContext(), "Waiting for transaction to complete", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Waiting for transaction to complete", Toast.LENGTH_SHORT).show();
             }
         });
 
