@@ -23,7 +23,7 @@ public class Main2Activity extends AppCompatActivity {
     TextView usrname;
     private FirebaseUser mUser;
      ArrayList<String> list;
-    private ArrayList<Integer> prices;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,15 +35,15 @@ public class Main2Activity extends AppCompatActivity {
         Button logut = findViewById(R.id.logoutButton);
         usrname = findViewById(R.id.usrname);
         final ListView listview = findViewById(R.id.listview);
-        prices=new ArrayList<Integer>(){
-            {
-                add(20);
-                add(10);
-                add(30);
-                add(10);
-                add(30);
-            }
-        };
+//        ArrayList<Integer> prices = new ArrayList<Integer>() {
+//            {
+//                add(20);
+//                add(10);
+//                add(30);
+//                add(10);
+//                add(30);
+//            }
+//        };
         logut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
