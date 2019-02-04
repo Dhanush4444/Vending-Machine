@@ -38,21 +38,26 @@
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                       android:textSize="20dp"
                       android:text="Select quantity : "
+                      android:visibility="invisible"
             />
             <Button
                     android:text="-"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:id="@+id/minusId"/>
+                    android:id="@+id/minusId"
+                    android:visibility="invisible"
+            />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:textSize="20dp"
                       android:text="0"
                       android:id="@+id/quantId"
+                      android:visibility="invisible"
             />
 
             <Button
                     android:text="+"
+                    android:visibility="invisible"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:id="@+id/plusId"/>
