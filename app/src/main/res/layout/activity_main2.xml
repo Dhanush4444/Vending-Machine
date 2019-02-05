@@ -11,6 +11,9 @@
             android:text="Logout"
             android:id="@+id/logoutButton"
     />
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/modeButt" android:text="Phone Mode"/>
     <TextView android:layout_width="match_parent"
               android:id="@+id/usrname"
               android:text="Username : "
