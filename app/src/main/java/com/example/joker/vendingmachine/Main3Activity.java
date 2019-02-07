@@ -21,7 +21,7 @@ import java.util.Objects;
 public class Main3Activity extends AppCompatActivity {
     Bundle extras;
     private int Id, wallet;
-    Button Inc, Dec;
+    Button Inc, Dec,coinMode,cardMode;
     public int rec;
     public Thread ob;
     public Long recLong;
@@ -45,6 +45,8 @@ public class Main3Activity extends AppCompatActivity {
         quantity = findViewById(R.id.quantId);
         Inc = findViewById(R.id.plusId);
         avail = findViewById(R.id.countId);
+        coinMode = findViewById(R.id.coinMode);
+        cardMode = findViewById(R.id.cardMode);
         balanceView = findViewById(R.id.balanceId);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -53,6 +55,24 @@ public class Main3Activity extends AppCompatActivity {
         extras = getIntent().getExtras();
         image = findViewById(R.id.imageView);
         Id = extras.getInt("id");
+
+        mDatabase.child("currentUser").setValue(mUser.getUid());
+
+        cardMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabase.child("Mode").setValue("Card");
+            }
+        });
+
+        coinMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDatabase.child("Mode").setValue("Coin");
+            }
+        });
+
+
         mDatabase.child("selected").setValue(Id+1);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
