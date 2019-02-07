@@ -53,7 +53,7 @@ public class Main3Activity extends AppCompatActivity {
         extras = getIntent().getExtras();
         image = findViewById(R.id.imageView);
         Id = extras.getInt("id");
-
+        mDatabase.child("selected").setValue(Id+1);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
