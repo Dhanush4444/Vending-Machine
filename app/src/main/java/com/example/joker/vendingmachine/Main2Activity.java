@@ -35,15 +35,7 @@ public class Main2Activity extends AppCompatActivity {
         Button logut = findViewById(R.id.logoutButton);
         usrname = findViewById(R.id.usrname);
         final ListView listview = findViewById(R.id.listview);
-//        ArrayList<Integer> prices = new ArrayList<Integer>() {
-//            {
-//                add(20);
-//                add(10);
-//                add(30);
-//                add(10);
-//                add(30);
-//            }
-//        };
+
         logut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,34 +54,6 @@ String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays :
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usrname.setText(String.format("Username : %s", Objects.requireNonNull(dataSnapshot.child(mUser.getUid()).child("Name").getValue()).toString()));
 
-// json=json.replace(':','=');
-//                try {
-//                    ob1=new JSONObject("{"+json+"}");
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(Main2Activity.this, e.getMessage() + json, Toast.LENGTH_SHORT).show();
-//                }
-//                try {
-//                    if(ob1.length() == 0) {
-//                        list.clear();
-//                        prices.clear();
-//                    }
-//                    if(prevCount!= ob1.getInt("itemCount")) {
-//                        list.clear();
-//                        prices.clear();
-//                        for (int i = 1; i <= ob1.getInt("itemCount"); i++) {
-//                            list.add(ob1.getJSONObject("" + i).getString("name"));
-//                            prices.add(ob1.getJSONObject(""+i).getInt("price"));
-//                        }
-//                        prevCount=ob1.getInt("itemCount");
-//                        listview.setAdapter(new ArrayAdapter<String>(Main2Activity.this, R.layout.my_list_view, list));
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//
 
 
             }
