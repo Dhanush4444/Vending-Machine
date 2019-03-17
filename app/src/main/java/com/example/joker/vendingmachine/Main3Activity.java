@@ -42,7 +42,9 @@ public class Main3Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main3);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        Set quantity reference
         quantity = findViewById(R.id.quantId);
+//        Set Increment reference
         Inc = findViewById(R.id.plusId);
         avail = findViewById(R.id.countId);
         coinMode = findViewById(R.id.coinMode);
