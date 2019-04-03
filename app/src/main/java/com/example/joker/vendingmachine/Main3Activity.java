@@ -95,11 +95,11 @@ public class Main3Activity extends AppCompatActivity {
                     wallet = wallet1.intValue();
 
                     if (wallet < temp) {
-                        Toast.makeText(Main3Activity.this, "Insufficeint Balance", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Main3Activity.this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
                     } else {
                         if (availableLong.intValue() > 0) {
                             wallet -= temp;
-                            Toast.makeText(Main3Activity.this, "Successfull", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Main3Activity.this, "Successful", Toast.LENGTH_LONG).show();
                             mDatabase.child("items").child(Objects.requireNonNull(extras.getString("idString"))).child("count").setValue(availableLong.intValue() - purchaseCount);
                             mDatabase.child(mUser.getUid()).child("wallet").setValue(wallet);
 
@@ -132,7 +132,16 @@ public class Main3Activity extends AppCompatActivity {
             public void onClick(View view) {
 //                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                            .setAction("Action", null).show();
-                Toast.makeText(getApplicationContext(), "Waiting for transaction to complete", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Waiting for transaction to complete", Toast.LENGTH_SHORT).show();
+        int itemPrize = currentPrizeLong.intValue();
+        int walletBalance = wallet1.intValue();
+
+        if(walletBalance < itemPrize){
+            Toast.makeText(Main3Activity.this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
+        } else{
+
+        }
+
             }
         });
 
