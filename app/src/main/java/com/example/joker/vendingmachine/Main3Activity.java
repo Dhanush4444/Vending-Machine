@@ -135,11 +135,11 @@ public class Main3Activity extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), "Waiting for transaction to complete", Toast.LENGTH_SHORT).show();
         int itemPrize = currentPrizeLong.intValue();
         int walletBalance = wallet1.intValue();
-
         if(walletBalance < itemPrize){
             Toast.makeText(Main3Activity.this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
         } else{
-
+            int temp33 = walletBalance - itemPrize;
+            mDatabase.child(mUser.getUid()).child("wallet").setValue(temp33);
         }
 
             }
