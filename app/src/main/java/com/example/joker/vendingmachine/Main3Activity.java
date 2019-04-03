@@ -144,6 +144,7 @@ public class Main3Activity extends AppCompatActivity {
                     int temp33 = walletBalance - itemPrize;
                     mDatabase.child(mUser.getUid()).child("wallet").setValue(temp33);
                     mDatabase.child("phoneBuy").setValue(true);
+                    mDatabase.child("Mode").setValue("Phone");
                 }
 
             }
