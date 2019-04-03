@@ -21,7 +21,7 @@ import java.util.Objects;
 public class Main3Activity extends AppCompatActivity {
     Bundle extras;
     private int Id, wallet;
-    Button Inc, Dec,coinMode,cardMode;
+    Button Inc, Dec, coinMode, cardMode;
     public int rec;
     public Thread ob;
     public Long recLong;
@@ -64,6 +64,8 @@ public class Main3Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mDatabase.child("Mode").setValue("Card");
+                mDatabase.child("phoneBuy").setValue(false);
+
             }
         });
 
@@ -71,11 +73,12 @@ public class Main3Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mDatabase.child("Mode").setValue("Coin");
+
             }
         });
 
 
-        mDatabase.child("selected").setValue(Id+1);
+        mDatabase.child("selected").setValue(Id + 1);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -133,14 +136,15 @@ public class Main3Activity extends AppCompatActivity {
 //                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                            .setAction("Action", null).show();
 //                Toast.makeText(getApplicationContext(), "Waiting for transaction to complete", Toast.LENGTH_SHORT).show();
-        int itemPrize = currentPrizeLong.intValue();
-        int walletBalance = wallet1.intValue();
-        if(walletBalance < itemPrize){
-            Toast.makeText(Main3Activity.this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
-        } else{
-            int temp33 = walletBalance - itemPrize;
-            mDatabase.child(mUser.getUid()).child("wallet").setValue(temp33);
-        }
+                int itemPrize = currentPrizeLong.intValue();
+                int walletBalance = wallet1.intValue();
+                if (walletBalance < itemPrize) {
+                    Toast.makeText(Main3Activity.this, "Insufficient Balance", Toast.LENGTH_SHORT).show();
+                } else {
+                    int temp33 = walletBalance - itemPrize;
+                    mDatabase.child(mUser.getUid()).child("wallet").setValue(temp33);
+                    mDatabase.child("phoneBuy").setValue(true);
+                }
 
             }
         });
