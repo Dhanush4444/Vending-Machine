@@ -152,17 +152,14 @@ public class Main3Activity extends AppCompatActivity {
 
 
         if (Id == 0) {
-            image.setImageResource(R.drawable.coke_can);
+            image.setImageResource(R.drawable.dairy_cho);
         } else if (Id == 1) {
             image.setImageResource(R.drawable.kitkat_cho);
         } else if (Id == 2) {
-            image.setImageResource(R.drawable.sp_can);
+            image.setImageResource(R.drawable.dark_f);
         } else if (Id == 3) {
-            image.setImageResource(R.drawable.lays_n);
-        } else if (Id == 4) {
-            image.setImageResource(R.drawable.dairy_cho);
+            image.setImageResource(R.drawable.per_ch);
         }
-
         Inc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

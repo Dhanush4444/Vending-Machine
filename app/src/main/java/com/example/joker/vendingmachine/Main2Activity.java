@@ -48,7 +48,7 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-String[] values= new String[]{"Coke : 20rs","Kitkat : 10rs","7up : 30rs","Lays : 10rs","Dairy Milk : 30rs"};
+String[] values= new String[]{"Dairy Milk : 20rs","Kitkat : 20rs","Dark Fantasy : 10rs","Perk : 10rs"};
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
